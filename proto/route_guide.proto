@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package proto;
+
+// Bu satırı kendi depo yolunuzla güncelleyin!
+option go_package = "github.com/Semhumc/grpc-proto/proto";
+
+service AIRouteService {
+  rpc GenerateRoute(GenerateRouteRequest) returns (GenerateRouteResponse) {}
+}
+
+message GenerateRouteRequest {
+  string username = 1;
+  string start_location = 2;
+  string destination = 3;
+  int32 duration_days = 4;
+  repeated string preferences = 5;
+}
+
+message GenerateRouteResponse {
+  string trip_plan_json = 1;
+}
