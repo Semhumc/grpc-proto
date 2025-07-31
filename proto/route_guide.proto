@@ -5,18 +5,54 @@ package proto;
 // Bu satırı kendi depo yolunuzla güncelleyin!
 option go_package = "github.com/Semhumc/grpc-proto/proto";
 
-service AIRouteService {
-  rpc GenerateRoute(GenerateRouteRequest) returns (GenerateRouteResponse) {}
+// AI servisinin sunacağı method
+service AIService {
+  rpc GeneratePlan(PromptRequest) returns (TripPlanResponse);
 }
 
-message GenerateRouteRequest {
-  string username = 1;
-  string start_location = 2;
-  string destination = 3;
-  int32 duration_days = 4;
-  repeated string preferences = 5;
+// AI'ya giden istek (PromptBody karşılığı)
+message PromptRequest {
+  string user_id = 1;
+  string name = 2;
+  string description = 3;
+  string start_position = 4;
+  string end_position = 5;
+  string start_date = 6; // ISO8601 string (örn: "2024-08-01T00:00:00Z")
+  string end_date = 7;
 }
 
-message GenerateRouteResponse {
-  string trip_plan_json = 1;
+// AI'dan dönecek seyahat planı cevabı
+message TripPlanResponse {
+  Trip trip = 1;
+  repeated DailyPlan daily_plan = 2;
+}
+
+// Trip modelin karşılığı
+message Trip {
+  string user_id = 1;
+  string name = 2;
+  string description = 3;
+  string start_position = 4;
+  string end_position = 5;
+  string start_date = 6;
+  string end_date = 7;
+  int32 total_days = 8;
+  string route_summary = 9;
+}
+
+// Günlük plan
+message DailyPlan {
+  int32 day = 1;
+  string date = 2;
+  Location location = 3;
+}
+
+// Kamp alanı konum bilgileri (Location struct'ına birebir uyumlu)
+message Location {
+  string name = 1;
+  string address = 2;    // optional değil ama boş string olabilir
+  string site_url = 3;
+  double latitude = 4;
+  double longitude = 5;
+  string notes = 6;
 }

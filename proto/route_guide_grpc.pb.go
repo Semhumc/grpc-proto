@@ -7,10 +7,10 @@
 package proto
 
 import (
-	"context"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	context "context"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,101 +19,105 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AIRouteService_GenerateRoute_FullMethodName = "/proto.AIRouteService/GenerateRoute"
+	AIService_GeneratePlan_FullMethodName = "/proto.AIService/GeneratePlan"
 )
 
-// AIRouteServiceClient is the client API for AIRouteService service.
+// AIServiceClient is the client API for AIService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AIRouteServiceClient interface {
-	GenerateRoute(ctx context.Context, in *GenerateRouteRequest, opts ...grpc.CallOption) (*GenerateRouteResponse, error)
+//
+// AI servisinin sunacağı method
+type AIServiceClient interface {
+	GeneratePlan(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*TripPlanResponse, error)
 }
 
-type aIRouteServiceClient struct {
+type aIServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAIRouteServiceClient(cc grpc.ClientConnInterface) AIRouteServiceClient {
-	return &aIRouteServiceClient{cc}
+func NewAIServiceClient(cc grpc.ClientConnInterface) AIServiceClient {
+	return &aIServiceClient{cc}
 }
 
-func (c *aIRouteServiceClient) GenerateRoute(ctx context.Context, in *GenerateRouteRequest, opts ...grpc.CallOption) (*GenerateRouteResponse, error) {
+func (c *aIServiceClient) GeneratePlan(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*TripPlanResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GenerateRouteResponse)
-	err := c.cc.Invoke(ctx, AIRouteService_GenerateRoute_FullMethodName, in, out, cOpts...)
+	out := new(TripPlanResponse)
+	err := c.cc.Invoke(ctx, AIService_GeneratePlan_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AIRouteServiceServer is the server API for AIRouteService service.
-// All implementations must embed UnimplementedAIRouteServiceServer
+// AIServiceServer is the server API for AIService service.
+// All implementations must embed UnimplementedAIServiceServer
 // for forward compatibility.
-type AIRouteServiceServer interface {
-	GenerateRoute(context.Context, *GenerateRouteRequest) (*GenerateRouteResponse, error)
-	mustEmbedUnimplementedAIRouteServiceServer()
+//
+// AI servisinin sunacağı method
+type AIServiceServer interface {
+	GeneratePlan(context.Context, *PromptRequest) (*TripPlanResponse, error)
+	mustEmbedUnimplementedAIServiceServer()
 }
 
-// UnimplementedAIRouteServiceServer must be embedded to have
+// UnimplementedAIServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedAIRouteServiceServer struct{}
+type UnimplementedAIServiceServer struct{}
 
-func (UnimplementedAIRouteServiceServer) GenerateRoute(context.Context, *GenerateRouteRequest) (*GenerateRouteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateRoute not implemented")
+func (UnimplementedAIServiceServer) GeneratePlan(context.Context, *PromptRequest) (*TripPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GeneratePlan not implemented")
 }
-func (UnimplementedAIRouteServiceServer) mustEmbedUnimplementedAIRouteServiceServer() {}
-func (UnimplementedAIRouteServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedAIServiceServer) mustEmbedUnimplementedAIServiceServer() {}
+func (UnimplementedAIServiceServer) testEmbeddedByValue()                   {}
 
-// UnsafeAIRouteServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AIRouteServiceServer will
+// UnsafeAIServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AIServiceServer will
 // result in compilation errors.
-type UnsafeAIRouteServiceServer interface {
-	mustEmbedUnimplementedAIRouteServiceServer()
+type UnsafeAIServiceServer interface {
+	mustEmbedUnimplementedAIServiceServer()
 }
 
-func RegisterAIRouteServiceServer(s grpc.ServiceRegistrar, srv AIRouteServiceServer) {
-	// If the following call pancis, it indicates UnimplementedAIRouteServiceServer was
+func RegisterAIServiceServer(s grpc.ServiceRegistrar, srv AIServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAIServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&AIRouteService_ServiceDesc, srv)
+	s.RegisterService(&AIService_ServiceDesc, srv)
 }
 
-func _AIRouteService_GenerateRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateRouteRequest)
+func _AIService_GeneratePlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PromptRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AIRouteServiceServer).GenerateRoute(ctx, in)
+		return srv.(AIServiceServer).GeneratePlan(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AIRouteService_GenerateRoute_FullMethodName,
+		FullMethod: AIService_GeneratePlan_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AIRouteServiceServer).GenerateRoute(ctx, req.(*GenerateRouteRequest))
+		return srv.(AIServiceServer).GeneratePlan(ctx, req.(*PromptRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AIRouteService_ServiceDesc is the grpc.ServiceDesc for AIRouteService service.
+// AIService_ServiceDesc is the grpc.ServiceDesc for AIService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AIRouteService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.AIRouteService",
-	HandlerType: (*AIRouteServiceServer)(nil),
+var AIService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.AIService",
+	HandlerType: (*AIServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GenerateRoute",
-			Handler:    _AIRouteService_GenerateRoute_Handler,
+			MethodName: "GeneratePlan",
+			Handler:    _AIService_GeneratePlan_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
