@@ -1,4 +1,4 @@
-module github.com/Semhumc/grpc-proto/proto
+module github.com/Semhumc/grpc-proto
 
 go 1.24.4
 
