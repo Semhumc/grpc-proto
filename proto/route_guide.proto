@@ -7,7 +7,7 @@ option go_package = "github.com/Semhumc/grpc-proto/proto";
 
 // AI servisinin sunacağı method
 service AIService {
-  rpc GeneratePlan(PromptRequest) returns (TripPlanResponse);
+  rpc GeneratePlan(PromptRequest) returns (TripOptionsResponse);
 }
 
 // AI'ya giden istek (PromptBody karşılığı)
@@ -21,10 +21,17 @@ message PromptRequest {
   string end_date = 7;
 }
 
-// AI'dan dönecek seyahat planı cevabı
-message TripPlanResponse {
-  Trip trip = 1;
-  repeated DailyPlan daily_plan = 2;
+// YENİ: 3 tema seçeneği döndüren response
+message TripOptionsResponse {
+  repeated TripOption trip_options = 1;
+}
+
+// YENİ: Her tema için seçenek
+message TripOption {
+  string theme = 1;
+  string description = 2;
+  Trip trip = 3;
+  repeated DailyPlan daily_plan = 4;
 }
 
 // Trip modelin karşılığı
