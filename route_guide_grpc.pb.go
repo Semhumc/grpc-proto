@@ -28,7 +28,7 @@ const (
 //
 // AI servisinin sunacağı method
 type AIServiceClient interface {
-	GeneratePlan(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*TripOptionsResponse, error)
+	GeneratePlan(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*TripPlanResponse, error)
 }
 
 type aIServiceClient struct {
@@ -39,9 +39,9 @@ func NewAIServiceClient(cc grpc.ClientConnInterface) AIServiceClient {
 	return &aIServiceClient{cc}
 }
 
-func (c *aIServiceClient) GeneratePlan(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*TripOptionsResponse, error) {
+func (c *aIServiceClient) GeneratePlan(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*TripPlanResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TripOptionsResponse)
+	out := new(TripPlanResponse)
 	err := c.cc.Invoke(ctx, AIService_GeneratePlan_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -55,7 +55,7 @@ func (c *aIServiceClient) GeneratePlan(ctx context.Context, in *PromptRequest, o
 //
 // AI servisinin sunacağı method
 type AIServiceServer interface {
-	GeneratePlan(context.Context, *PromptRequest) (*TripOptionsResponse, error)
+	GeneratePlan(context.Context, *PromptRequest) (*TripPlanResponse, error)
 	mustEmbedUnimplementedAIServiceServer()
 }
 
@@ -66,7 +66,7 @@ type AIServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAIServiceServer struct{}
 
-func (UnimplementedAIServiceServer) GeneratePlan(context.Context, *PromptRequest) (*TripOptionsResponse, error) {
+func (UnimplementedAIServiceServer) GeneratePlan(context.Context, *PromptRequest) (*TripPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GeneratePlan not implemented")
 }
 func (UnimplementedAIServiceServer) mustEmbedUnimplementedAIServiceServer() {}

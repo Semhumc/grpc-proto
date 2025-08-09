@@ -114,29 +114,28 @@ func (x *PromptRequest) GetEndDate() string {
 	return ""
 }
 
-// AI'dan dönecek seyahat planı cevabı
-type TripPlanResponse struct {
+// YENİ: 3 tema seçeneği döndüren response
+type TripOptionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Trip          *Trip                  `protobuf:"bytes,1,opt,name=trip,proto3" json:"trip,omitempty"`
-	DailyPlan     []*DailyPlan           `protobuf:"bytes,2,rep,name=daily_plan,json=dailyPlan,proto3" json:"daily_plan,omitempty"`
+	TripOptions   []*TripOption          `protobuf:"bytes,1,rep,name=trip_options,json=tripOptions,proto3" json:"trip_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TripPlanResponse) Reset() {
-	*x = TripPlanResponse{}
+func (x *TripOptionsResponse) Reset() {
+	*x = TripOptionsResponse{}
 	mi := &file_proto_route_guide_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TripPlanResponse) String() string {
+func (x *TripOptionsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TripPlanResponse) ProtoMessage() {}
+func (*TripOptionsResponse) ProtoMessage() {}
 
-func (x *TripPlanResponse) ProtoReflect() protoreflect.Message {
+func (x *TripOptionsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_route_guide_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -148,19 +147,81 @@ func (x *TripPlanResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TripPlanResponse.ProtoReflect.Descriptor instead.
-func (*TripPlanResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TripOptionsResponse.ProtoReflect.Descriptor instead.
+func (*TripOptionsResponse) Descriptor() ([]byte, []int) {
 	return file_proto_route_guide_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *TripPlanResponse) GetTrip() *Trip {
+func (x *TripOptionsResponse) GetTripOptions() []*TripOption {
+	if x != nil {
+		return x.TripOptions
+	}
+	return nil
+}
+
+// YENİ: Her tema için seçenek
+type TripOption struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Theme         string                 `protobuf:"bytes,1,opt,name=theme,proto3" json:"theme,omitempty"`
+	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	Trip          *Trip                  `protobuf:"bytes,3,opt,name=trip,proto3" json:"trip,omitempty"`
+	DailyPlan     []*DailyPlan           `protobuf:"bytes,4,rep,name=daily_plan,json=dailyPlan,proto3" json:"daily_plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TripOption) Reset() {
+	*x = TripOption{}
+	mi := &file_proto_route_guide_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TripOption) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TripOption) ProtoMessage() {}
+
+func (x *TripOption) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_route_guide_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TripOption.ProtoReflect.Descriptor instead.
+func (*TripOption) Descriptor() ([]byte, []int) {
+	return file_proto_route_guide_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TripOption) GetTheme() string {
+	if x != nil {
+		return x.Theme
+	}
+	return ""
+}
+
+func (x *TripOption) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *TripOption) GetTrip() *Trip {
 	if x != nil {
 		return x.Trip
 	}
 	return nil
 }
 
-func (x *TripPlanResponse) GetDailyPlan() []*DailyPlan {
+func (x *TripOption) GetDailyPlan() []*DailyPlan {
 	if x != nil {
 		return x.DailyPlan
 	}
@@ -185,7 +246,7 @@ type Trip struct {
 
 func (x *Trip) Reset() {
 	*x = Trip{}
-	mi := &file_proto_route_guide_proto_msgTypes[2]
+	mi := &file_proto_route_guide_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -197,7 +258,7 @@ func (x *Trip) String() string {
 func (*Trip) ProtoMessage() {}
 
 func (x *Trip) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_route_guide_proto_msgTypes[2]
+	mi := &file_proto_route_guide_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -210,7 +271,7 @@ func (x *Trip) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Trip.ProtoReflect.Descriptor instead.
 func (*Trip) Descriptor() ([]byte, []int) {
-	return file_proto_route_guide_proto_rawDescGZIP(), []int{2}
+	return file_proto_route_guide_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Trip) GetUserId() string {
@@ -288,7 +349,7 @@ type DailyPlan struct {
 
 func (x *DailyPlan) Reset() {
 	*x = DailyPlan{}
-	mi := &file_proto_route_guide_proto_msgTypes[3]
+	mi := &file_proto_route_guide_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -300,7 +361,7 @@ func (x *DailyPlan) String() string {
 func (*DailyPlan) ProtoMessage() {}
 
 func (x *DailyPlan) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_route_guide_proto_msgTypes[3]
+	mi := &file_proto_route_guide_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -313,7 +374,7 @@ func (x *DailyPlan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DailyPlan.ProtoReflect.Descriptor instead.
 func (*DailyPlan) Descriptor() ([]byte, []int) {
-	return file_proto_route_guide_proto_rawDescGZIP(), []int{3}
+	return file_proto_route_guide_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DailyPlan) GetDay() int32 {
@@ -352,7 +413,7 @@ type Location struct {
 
 func (x *Location) Reset() {
 	*x = Location{}
-	mi := &file_proto_route_guide_proto_msgTypes[4]
+	mi := &file_proto_route_guide_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -364,7 +425,7 @@ func (x *Location) String() string {
 func (*Location) ProtoMessage() {}
 
 func (x *Location) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_route_guide_proto_msgTypes[4]
+	mi := &file_proto_route_guide_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -377,7 +438,7 @@ func (x *Location) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Location.ProtoReflect.Descriptor instead.
 func (*Location) Descriptor() ([]byte, []int) {
-	return file_proto_route_guide_proto_rawDescGZIP(), []int{4}
+	return file_proto_route_guide_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Location) GetName() string {
@@ -435,11 +496,16 @@ const file_proto_route_guide_proto_rawDesc = "" +
 	"\fend_position\x18\x05 \x01(\tR\vendPosition\x12\x1d\n" +
 	"\n" +
 	"start_date\x18\x06 \x01(\tR\tstartDate\x12\x19\n" +
-	"\bend_date\x18\a \x01(\tR\aendDate\"d\n" +
-	"\x10TripPlanResponse\x12\x1f\n" +
-	"\x04trip\x18\x01 \x01(\v2\v.proto.TripR\x04trip\x12/\n" +
+	"\bend_date\x18\a \x01(\tR\aendDate\"K\n" +
+	"\x13TripOptionsResponse\x124\n" +
+	"\ftrip_options\x18\x01 \x03(\v2\x11.proto.TripOptionR\vtripOptions\"\x96\x01\n" +
 	"\n" +
-	"daily_plan\x18\x02 \x03(\v2\x10.proto.DailyPlanR\tdailyPlan\"\x9d\x02\n" +
+	"TripOption\x12\x14\n" +
+	"\x05theme\x18\x01 \x01(\tR\x05theme\x12 \n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1f\n" +
+	"\x04trip\x18\x03 \x01(\v2\v.proto.TripR\x04trip\x12/\n" +
+	"\n" +
+	"daily_plan\x18\x04 \x03(\v2\x10.proto.DailyPlanR\tdailyPlan\"\x9d\x02\n" +
 	"\x04Trip\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -462,9 +528,9 @@ const file_proto_route_guide_proto_rawDesc = "" +
 	"\bsite_url\x18\x03 \x01(\tR\asiteUrl\x12\x1a\n" +
 	"\blatitude\x18\x04 \x01(\x01R\blatitude\x12\x1c\n" +
 	"\tlongitude\x18\x05 \x01(\x01R\tlongitude\x12\x14\n" +
-	"\x05notes\x18\x06 \x01(\tR\x05notes2J\n" +
-	"\tAIService\x12=\n" +
-	"\fGeneratePlan\x12\x14.proto.PromptRequest\x1a\x17.proto.TripPlanResponseB%Z#github.com/Semhumc/grpc-proto/protob\x06proto3"
+	"\x05notes\x18\x06 \x01(\tR\x05notes2M\n" +
+	"\tAIService\x12@\n" +
+	"\fGeneratePlan\x12\x14.proto.PromptRequest\x1a\x1a.proto.TripOptionsResponseB%Z#github.com/Semhumc/grpc-proto/protob\x06proto3"
 
 var (
 	file_proto_route_guide_proto_rawDescOnce sync.Once
@@ -478,25 +544,27 @@ func file_proto_route_guide_proto_rawDescGZIP() []byte {
 	return file_proto_route_guide_proto_rawDescData
 }
 
-var file_proto_route_guide_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_route_guide_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_route_guide_proto_goTypes = []any{
-	(*PromptRequest)(nil),    // 0: proto.PromptRequest
-	(*TripPlanResponse)(nil), // 1: proto.TripPlanResponse
-	(*Trip)(nil),             // 2: proto.Trip
-	(*DailyPlan)(nil),        // 3: proto.DailyPlan
-	(*Location)(nil),         // 4: proto.Location
+	(*PromptRequest)(nil),       // 0: proto.PromptRequest
+	(*TripOptionsResponse)(nil), // 1: proto.TripOptionsResponse
+	(*TripOption)(nil),          // 2: proto.TripOption
+	(*Trip)(nil),                // 3: proto.Trip
+	(*DailyPlan)(nil),           // 4: proto.DailyPlan
+	(*Location)(nil),            // 5: proto.Location
 }
 var file_proto_route_guide_proto_depIdxs = []int32{
-	2, // 0: proto.TripPlanResponse.trip:type_name -> proto.Trip
-	3, // 1: proto.TripPlanResponse.daily_plan:type_name -> proto.DailyPlan
-	4, // 2: proto.DailyPlan.location:type_name -> proto.Location
-	0, // 3: proto.AIService.GeneratePlan:input_type -> proto.PromptRequest
-	1, // 4: proto.AIService.GeneratePlan:output_type -> proto.TripPlanResponse
-	4, // [4:5] is the sub-list for method output_type
-	3, // [3:4] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	2, // 0: proto.TripOptionsResponse.trip_options:type_name -> proto.TripOption
+	3, // 1: proto.TripOption.trip:type_name -> proto.Trip
+	4, // 2: proto.TripOption.daily_plan:type_name -> proto.DailyPlan
+	5, // 3: proto.DailyPlan.location:type_name -> proto.Location
+	0, // 4: proto.AIService.GeneratePlan:input_type -> proto.PromptRequest
+	1, // 5: proto.AIService.GeneratePlan:output_type -> proto.TripOptionsResponse
+	5, // [5:6] is the sub-list for method output_type
+	4, // [4:5] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_route_guide_proto_init() }
@@ -510,7 +578,7 @@ func file_proto_route_guide_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_route_guide_proto_rawDesc), len(file_proto_route_guide_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
